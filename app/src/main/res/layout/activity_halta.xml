@@ -96,8 +96,9 @@
         android:id="@+id/imgResultado"
         android:layout_width="411dp"
         android:layout_height="367dp"
-        android:background="@drawable/imagen_prueba"
+        android:scaleType="centerInside"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
 </androidx.constraintlayout.widget.ConstraintLayout>
