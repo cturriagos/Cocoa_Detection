@@ -19,15 +19,22 @@ import android.widget.TextView;
 import android.Manifest;
 import android.provider.MediaStore;
 
+import com.example.cocoa_tester.ml.HWmodel;
+
+import org.tensorflow.lite.DataType;
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public class H_Alta extends AppCompatActivity {
 
     Button camera, gallery;
     ImageView imageView;
     TextView result;
-    int imageSize = 32;
+    int imageSize = 300;
 
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -102,7 +109,7 @@ public class H_Alta extends AppCompatActivity {
                 imageView.setImageBitmap(image);
 
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-                //classifyImage(image);
+                classifyImage(image);
             } else if (requestCode == 1) {
                 // Código para procesar la imagen seleccionada desde la galería
                 if (data != null && data.getData() != null) {
@@ -117,7 +124,7 @@ public class H_Alta extends AppCompatActivity {
                             imageView.setImageBitmap(thumbnail);
 
                             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
-                            //classifyImage(image);
+                            classifyImage(image);
 
                         } else {
                             Log.e("H_Alta", "Error al obtener la imagen desde la galería.");
@@ -132,6 +139,57 @@ public class H_Alta extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void classifyImage(Bitmap image)
+    {
+        try {
+            HWmodel model = HWmodel.newInstance(getApplicationContext());
+
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 300, 300, 3}, DataType.FLOAT32);
+
+            ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
+            byteBuffer.order(ByteOrder.nativeOrder());
+            int[] intValues = new int [imageSize * imageSize];
+            image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+
+            int pixel = 0;
+            for(int i = 0; i < imageSize; i++)
+            {
+                for(int j = 0 ; j < imageSize; j++)
+                {
+                    int val = intValues[pixel++]; //RGB
+                    byteBuffer.putFloat(((val >> 16) & 0xFF) * (1.f / 1));
+                    byteBuffer.putFloat(((val >> 8) & 0xFF) * (1.f / 1));
+                    byteBuffer.putFloat((val & 0xFF) * (1.f / 1));
+                }
+            }
+
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            HWmodel.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+            float[] confidences = outputFeature0.getFloatArray();
+            int maxPos = 0;
+            float maxConfidence = 0;
+            for (int i = 0; i < confidences.length; i++) {
+                if (confidences[i] > maxConfidence) {
+                    maxConfidence = confidences[i];
+                    maxPos = i;
+                }
+            }
+            String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
+            result.setText(classes[maxPos]);
+
+            // Releases model resources if no longer used.
+            //model.close();
+        } catch (IOException e) {
+            // TODO Handle the exception
+        }
+
     }
 
 }
