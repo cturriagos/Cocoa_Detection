@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -182,10 +183,16 @@ public class H_Alta extends AppCompatActivity {
                 }
             }
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
+            System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);
+            if (classes[maxPos] == "Calidad alta"){
+                result.setTextColor(Color.GREEN);
+            } else if (classes[maxPos] == "Calidad media") {
+                result.setTextColor(Color.YELLOW);
+            } else {
+                result.setTextColor(Color.RED);
+            }
 
-            // Releases model resources if no longer used.
-            //model.close();
         } catch (IOException e) {
             // TODO Handle the exception
         }
