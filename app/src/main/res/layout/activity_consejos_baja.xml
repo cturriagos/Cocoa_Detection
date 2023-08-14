@@ -12,10 +12,10 @@
         android:layout_width="348dp"
         android:layout_height="154dp"
         android:layout_marginTop="30dp"
-        android:text="Haga esto a más tardar 2 días después de su cosecha. No mezcle granos cosechados en diferentes días. Al extraer el grano evite que lleve material extraño como pedazos de cáscara, ramillas, tierra y placentas o tripas. El grano extraído en baba se deposita en recipientes limpios de madera, plástico o en sacos con forro de plástico; no use recipientes de metal."
+        android:text="La fermentación del cacao dura cerca de cinco días con un volteo diario, que consiste en mover el cacao de uno a otro cajón cada 24 horas. Siempre se deben realizar volteos una vez cada 24 horas. En cada volteo el grano de abajo debe quedar arriba y el de las esquinas en el centro."
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,17 +53,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/consejo2" />
+        app:srcCompat="@drawable/consejo3" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="298dp"
         android:layout_height="55dp"
         android:layout_marginTop="15dp"
-        android:text="Quebrar la mazorca con cuidado"
+        android:text="Realizar volteos al cacao"
         android:textAlignment="center"
         android:textColor="#FFEB3B"
-        android:textSize="17sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
