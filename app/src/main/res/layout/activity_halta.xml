@@ -20,10 +20,11 @@
         <!-- Coloca tus botones aquí -->
 
         <Button
-            android:id="@+id/btnConsejos"
+            android:id="@+id/btnConsejos_Alta"
             android:layout_width="wrap_content"
             android:layout_height="69dp"
             android:layout_marginTop="0dp"
+            android:onClick="goConsejoAlta"
             android:text="Consejos"
             app:layout_constraintTop_toBottomOf="@+id/txtResultado"
             tools:layout_editor_absoluteX="216dp" />

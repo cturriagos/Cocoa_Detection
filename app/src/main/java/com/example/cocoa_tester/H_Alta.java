@@ -51,6 +51,7 @@ public class H_Alta extends AppCompatActivity {
         result = findViewById(R.id.txtResultado);
         imageView = findViewById(R.id.imgResultado);
 
+
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +70,11 @@ public class H_Alta extends AppCompatActivity {
                 startActivityForResult(cameraIntent, 1);
             }
         });
+    }
+
+    public void goConsejoAlta (View vista){
+        Intent myIntent = new Intent(this, ConsejosAlta.class);
+        startActivity(myIntent);
     }
 
     /*@Override
