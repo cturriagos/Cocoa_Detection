@@ -23,6 +23,12 @@
             android:name=".ConsejosPrincipal"
             android:exported="false" />
         <activity
+            android:name=".ConsejosAlta"
+            android:exported="false" />
+        <activity
+            android:name=".ConsejosBaja"
+            android:exported="false" />
+        <activity
             android:name=".H_Alta"
             android:exported="false" />
         <activity

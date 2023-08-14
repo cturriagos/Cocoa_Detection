@@ -68,7 +68,10 @@ public class H_Baja extends AppCompatActivity {
         });
     }
 
-
+    public void goConsejoBaja (View vista){
+        Intent myIntent = new Intent(this, ConsejosBaja.class);
+        startActivity(myIntent);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
