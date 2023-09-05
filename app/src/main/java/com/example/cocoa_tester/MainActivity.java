@@ -28,4 +28,9 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, ConsejosPrincipal.class);
         startActivity(myIntent);
     }
-}   
+
+    public void goReportes (View vista){
+        Intent myIntent = new Intent(this, Reportes.class);
+        startActivity(myIntent);
+    }
+}

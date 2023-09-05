@@ -20,6 +20,12 @@
         android:theme="@style/Theme.Cocoa_Tester"
         tools:targetApi="31">
         <activity
+            android:name=".ReporteA"
+            android:exported="false" />
+        <activity
+            android:name=".Reportes"
+            android:exported="false" />
+        <activity
             android:name=".ConsejosPrincipal"
             android:exported="false" />
         <activity

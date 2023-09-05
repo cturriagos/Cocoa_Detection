@@ -1,6 +1,7 @@
 package com.example.cocoa_tester;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -25,11 +26,19 @@ import com.example.cocoa_tester.ml.LWmodel;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
+import java.io.BufferedReader;
 import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class H_Baja extends AppCompatActivity {
 
@@ -85,6 +94,14 @@ public class H_Baja extends AppCompatActivity {
 
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
+
+                String calidad = result.getText().toString();
+                calidad = calidad.replace("Calidad ", "");
+
+                String humedad = "BajaHumedad";
+                String hora = obtenerHoraActual();
+                String nombreImagen = guardarImagen(image);
+                guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen);
             } else if (requestCode == 1) {
                 // Código para procesar la imagen seleccionada desde la galería
                 if (data != null && data.getData() != null) {
@@ -100,6 +117,14 @@ public class H_Baja extends AppCompatActivity {
 
                             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                             classifyImage(image);
+
+                            String calidad = result.getText().toString();
+                            calidad = calidad.replace("Calidad ", "");
+
+                            String humedad = "BajaHumedad";
+                            String hora = obtenerHoraActual();
+                            String nombreImagen = guardarImagen(image);
+                            guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen);
 
                         } else {
                             Log.e("H_Alta", "Error al obtener la imagen desde la galería.");
@@ -173,5 +198,94 @@ public class H_Baja extends AppCompatActivity {
             // TODO Handle the exception
         }
 
+    }
+
+    private String obtenerHoraActual() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
+    private String guardarImagen(Bitmap imagen) {
+        String nombreArchivo = "imagen_" + System.currentTimeMillis() + ".jpg";
+        try {
+            FileOutputStream fos = openFileOutput(nombreArchivo, Context.MODE_PRIVATE);
+            imagen.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.close();
+            return nombreArchivo;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void guardarRegistroEnArchivo(String calidad, String humedad, String hora, String nombreImagen) {
+        try {
+            File archivo = new File(getFilesDir(), "registros2.txt");
+
+            if (!archivo.exists()) {
+                archivo.createNewFile();
+            }
+
+            FileInputStream fis = openFileInput("registros2.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+
+            // Verificar si el registro ya existe en el archivo
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] campos = linea.split(" - ");
+                if (campos.length >= 4) {
+                    String calidadExistente = campos[0];
+                    String humedadExistente = campos[1];
+                    String horaExistente = campos[2];
+                    String nombreImagenExistente = campos[3];
+
+                    if (calidad.equals(calidadExistente) && humedad.equals(humedadExistente) &&
+                            hora.equals(horaExistente) && nombreImagen.equals(nombreImagenExistente)) {
+                        // Registro duplicado, no se guarda nuevamente
+                        br.close();
+                        isr.close();
+                        fis.close();
+                        return;
+                    }
+                }
+            }
+
+            // Si el registro no existe, agregarlo al archivo
+            br.close();
+            isr.close();
+            fis.close();
+
+            FileOutputStream fos = openFileOutput("registros2.txt", MODE_APPEND);
+            String registro = calidad + " - " + humedad + " - " + hora + " - " + nombreImagen + "\n";
+            fos.write(registro.getBytes());
+            fos.close();
+
+            //  Borrar cuando sea nacesario
+            imprimirRegistros();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //  NO TOCAR!!! ESTO ES PARA VERIFICAR EL ALMACENAMIENTO :)
+    private void imprimirRegistros() {
+        try {
+            FileInputStream fis = openFileInput("registros2.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                Log.d("Registros", linea);
+            }
+
+            br.close();
+            isr.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -7,6 +7,18 @@
     android:background="#1E2A58"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btnReporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:onClick="goReportes"
+        android:text="Reportes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.306"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnHumedad_baja" />
+
     <TextView
         android:id="@+id/txtTitulo3"
         android:layout_width="wrap_content"
@@ -24,11 +36,11 @@
         android:id="@+id/btnConsejos_Alta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="76dp"
         android:onClick="goConsejos"
         android:text="Consejos"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.699"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnHumedad_baja" />
 
