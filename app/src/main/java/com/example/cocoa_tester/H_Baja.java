@@ -168,7 +168,6 @@ public class H_Baja extends AppCompatActivity {
 
             inputFeature0.loadBuffer(byteBuffer);
 
-            // Runs model inference and gets result.
             LWmodel.Outputs outputs = model.process(inputFeature0);
             TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
@@ -192,7 +191,6 @@ public class H_Baja extends AppCompatActivity {
                 result.setTextColor(Color.RED);
             }
 
-            // Releases model resources if no longer used.
             //model.close();
         } catch (IOException e) {
             // TODO Handle the exception
@@ -230,7 +228,6 @@ public class H_Baja extends AppCompatActivity {
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
 
-            // Verificar si el registro ya existe en el archivo
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] campos = linea.split(" - ");
@@ -251,7 +248,6 @@ public class H_Baja extends AppCompatActivity {
                 }
             }
 
-            // Si el registro no existe, agregarlo al archivo
             br.close();
             isr.close();
             fis.close();
@@ -270,6 +266,7 @@ public class H_Baja extends AppCompatActivity {
     }
 
     //  NO TOCAR!!! ESTO ES PARA VERIFICAR EL ALMACENAMIENTO :)
+    //  SE PUEDE COMENTAR ESTA SECCIÓN SIEMPRE Y CUANDO LA APP YA ESTÉ COMPLETAMENTE FUNCIONAL
     private void imprimirRegistros() {
         try {
             FileInputStream fis = openFileInput("registros2.txt");

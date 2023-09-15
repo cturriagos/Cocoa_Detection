@@ -119,8 +119,8 @@ public class Reportes extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    public void goReporteB(View vista){
-        Intent myIntent = new Intent(this, ReporteB.class);
-        startActivity(myIntent);
-    }
+    //public void goReporteB(View vista){
+    //    Intent myIntent = new Intent(this, ReporteB.class);
+    //    startActivity(myIntent);
+    //}
 }
