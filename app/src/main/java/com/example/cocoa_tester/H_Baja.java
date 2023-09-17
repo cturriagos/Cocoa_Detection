@@ -46,6 +46,7 @@ public class H_Baja extends AppCompatActivity {
     ImageView imageView;
     TextView result;
     int imageSize = 300;
+    float confidence = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,6 +181,7 @@ public class H_Baja extends AppCompatActivity {
                     maxPos = i;
                 }
             }
+            this.confidence = maxConfidence;
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);

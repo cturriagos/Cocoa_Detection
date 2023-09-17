@@ -46,6 +46,8 @@ public class H_Alta extends AppCompatActivity {
     TextView result;
     int imageSize = 300;
 
+    float confidence = 0;
+
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_IMAGE_PICK = 2;
@@ -213,6 +215,7 @@ public class H_Alta extends AppCompatActivity {
                     maxPos = i;
                 }
             }
+            this.confidence = maxConfidence;
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);
