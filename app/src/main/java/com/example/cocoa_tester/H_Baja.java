@@ -45,6 +45,7 @@ public class H_Baja extends AppCompatActivity {
     Button camera, gallery;
     ImageView imageView;
     TextView result;
+    TextView conf;
     int imageSize = 300;
     float qualityLvl = 0;
 

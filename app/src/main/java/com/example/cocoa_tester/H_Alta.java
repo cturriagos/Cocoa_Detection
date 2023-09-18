@@ -1,5 +1,7 @@
 package com.example.cocoa_tester;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,6 +45,7 @@ public class H_Alta extends AppCompatActivity {
     Button camera, gallery;
     ImageView imageView;
     TextView result;
+    TextView pct;
     int imageSize = 300;
     float qualityLvl = 0;
 
@@ -59,6 +62,7 @@ public class H_Alta extends AppCompatActivity {
         gallery = findViewById(R.id.btnGaleria);
         result = findViewById(R.id.txtResultado);
         imageView = findViewById(R.id.imgResultado);
+        pct = findViewById(R.id.txtPorcentaje);
 
 
         camera.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +137,8 @@ public class H_Alta extends AppCompatActivity {
                 String humedad = "AltaHumedad";
                 String hora = obtenerHoraActual();
                 String nombreImagen = guardarImagen(image);
-                guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen);
+                String porcentaje = String.valueOf((int)qualityLvl * 100);
+                guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen, porcentaje);
             } else if (requestCode == 1) {
                 // Código para procesar la imagen seleccionada desde la galería
                 if (data != null && data.getData() != null) {
@@ -156,7 +161,8 @@ public class H_Alta extends AppCompatActivity {
                             String humedad = "AltaHumedad";
                             String hora = obtenerHoraActual();
                             String nombreImagen = guardarImagen(image);
-                            guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen);
+                            String porcentaje = String.valueOf((int)qualityLvl * 100);
+                            guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen, porcentaje);
 
                         } else {
                             Log.e("H_Alta", "Error al obtener la imagen desde la galería.");
@@ -216,6 +222,8 @@ public class H_Alta extends AppCompatActivity {
                 qltMultiplier = (i + 1f) * 0.33f;
             }
             this.qualityLvl = maxConfidence * qltMultiplier;
+            int pct_aux = (int) this.qualityLvl;
+            pct.setText(String.valueOf(pct_aux));
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);
@@ -226,8 +234,6 @@ public class H_Alta extends AppCompatActivity {
             } else {
                 result.setTextColor(Color.RED);
             }
-
-
 
         } catch (IOException e) {
             // TODO Handle the exception
@@ -253,7 +259,7 @@ public class H_Alta extends AppCompatActivity {
         }
     }
 
-    private void guardarRegistroEnArchivo(String calidad, String humedad, String hora, String nombreImagen) {
+    private void guardarRegistroEnArchivo(String calidad, String humedad, String hora, String nombreImagen, String porcentaje) {
         try {
             File archivo = new File(getFilesDir(), "registros.txt");
 
@@ -269,11 +275,12 @@ public class H_Alta extends AppCompatActivity {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] campos = linea.split(" - ");
-                if (campos.length >= 4) {
+                if (campos.length >= 5) {
                     String calidadExistente = campos[0];
                     String humedadExistente = campos[1];
                     String horaExistente = campos[2];
                     String nombreImagenExistente = campos[3];
+                    String porcentajeExistente = campos[4];
 
                     if (calidad.equals(calidadExistente) && humedad.equals(humedadExistente) &&
                             hora.equals(horaExistente) && nombreImagen.equals(nombreImagenExistente)) {
@@ -292,7 +299,7 @@ public class H_Alta extends AppCompatActivity {
             fis.close();
 
             FileOutputStream fos = openFileOutput("registros.txt", MODE_APPEND);
-            String registro = calidad + " - " + humedad + " - " + hora + " - " + nombreImagen + "\n";
+            String registro = calidad + " - " + humedad + " - " + hora + " - " + nombreImagen + " - " + porcentaje + "\n";
             fos.write(registro.getBytes());
             fos.close();
 
