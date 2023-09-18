@@ -215,18 +215,20 @@ public class H_Alta extends AppCompatActivity {
 
             float qltMultiplier = 1.0f;
             float maxConfidence = 0;
+            float minConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
                 if (confidences[i] > maxConfidence) {
                     maxConfidence = confidences[i];
                     maxPos = i;
-                    qltMultiplier = ((float)i + 1f) * 0.33f;
+                    qltMultiplier = (2f - (float)i) * 0.34f;
+                }
+                if(confidences[i] <= minConfidence) {
+                    minConfidence = confidences[i];
                 }
             }
 
-            if (maxConfidence >= 1){
-                maxConfidence = 0.99f;
-            }
-            this.qualityLvl = maxConfidence * qltMultiplier * 100;
+            this.qualityLvl = ((maxConfidence * 0.33f / (maxConfidence - minConfidence)) + qltMultiplier) * 100;
+
             int pct_aux = (int) this.qualityLvl;
             pct.setText("Calidad estimada del " + String.valueOf(pct_aux) + "% ");
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
