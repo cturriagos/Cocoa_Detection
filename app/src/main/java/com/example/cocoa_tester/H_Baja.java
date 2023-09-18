@@ -188,6 +188,11 @@ public class H_Baja extends AppCompatActivity {
                     qltMultiplier = ((float)i + 1f) * 0.33f;
                 }
             }
+
+            if (maxConfidence >= 1){
+                maxConfidence = 0.99f;
+            }
+
             this.qualityLvl = maxConfidence * qltMultiplier * 100;
             int pct_aux = (int) this.qualityLvl;
             pct.setText("Calidad estimada del " + String.valueOf(pct_aux) + "% ");
