@@ -1,9 +1,10 @@
 package com.example.cocoa_tester;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.os.Bundle;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -13,8 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ReporteA extends AppCompatActivity {
-
+public class ReporteB extends AppCompatActivity {
     private List<RegistroCacao> registros = new ArrayList<>();
 
     @Override
@@ -34,7 +34,7 @@ public class ReporteA extends AppCompatActivity {
         List<RegistroCacao> reversedRegistros = new ArrayList<>();
 
         try {
-            FileInputStream fis = openFileInput("registros.txt");
+            FileInputStream fis = openFileInput("registros2.txt");
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
 

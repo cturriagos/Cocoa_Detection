@@ -41,7 +41,7 @@ public class RegistroCacaoAdapter extends RecyclerView.Adapter<RegistroCacaoAdap
         holder.txtCalidad.setText("Calidad: " + registro.getCalidad());
         holder.txtFecha.setText("Fecha: " + registro.getFecha());
         holder.txtHora.setText("Hora: " + registro.getHora());
-        holder.txtPorcentaje.setText("Porcentaje: " +registro.getPorcentaje());
+        holder.txtPorcentaje.setText("Porcentaje: " +registro.getPorcentaje() + "%");
 
 
         holder.btnImagen.setOnClickListener(new View.OnClickListener() {

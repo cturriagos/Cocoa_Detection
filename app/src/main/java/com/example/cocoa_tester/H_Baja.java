@@ -98,13 +98,14 @@ public class H_Baja extends AppCompatActivity {
                 image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                 classifyImage(image);
 
-                String calidad = result.getText().toString();
+                String calidad = result.getText().toString().toLowerCase();
                 calidad = calidad.replace("Calidad ", "");
 
-                String humedad = "BajaHumedad";
+                String humedad = "LowHumidity";
                 String hora = obtenerHoraActual();
                 String nombreImagen = guardarImagen(image);
-                String porcentaje = String.valueOf((int)qualityLvl * 100);
+                int pct_aux = (int) this.qualityLvl;
+                String porcentaje = String.valueOf(pct_aux);
                 guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen, porcentaje);
             } else if (requestCode == 1) {
                 // Código para procesar la imagen seleccionada desde la galería
@@ -122,23 +123,24 @@ public class H_Baja extends AppCompatActivity {
                             image = Bitmap.createScaledBitmap(image, imageSize, imageSize, false);
                             classifyImage(image);
 
-                            String calidad = result.getText().toString();
+                            String calidad = result.getText().toString().toLowerCase();
                             calidad = calidad.replace("Calidad ", "");
 
-                            String humedad = "BajaHumedad";
+                            String humedad = "LowHumidity";
                             String hora = obtenerHoraActual();
                             String nombreImagen = guardarImagen(image);
-                            String porcentaje = String.valueOf((int)qualityLvl * 100);
+                            int pct_aux = (int) this.qualityLvl;
+                            String porcentaje = String.valueOf(pct_aux);
                             guardarRegistroEnArchivo(calidad, humedad, hora, nombreImagen, porcentaje);
 
                         } else {
-                            Log.e("H_Alta", "Error al obtener la imagen desde la galería.");
+                            Log.e("H_Baja", "Error al obtener la imagen desde la galería.");
                         }
 
                         inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("H_Alta", "Error al obtener la imagen desde la galería.");
+                        Log.e("H_Baja", "Error al obtener la imagen desde la galería.");
                     }
                 }
             }
