@@ -212,16 +212,16 @@ public class H_Alta extends AppCompatActivity {
 
             float[] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
-            float qltMultiplier = 1;
+            float qltMultiplier = 1.0f;
             float maxConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
                 if (confidences[i] > maxConfidence) {
                     maxConfidence = confidences[i];
                     maxPos = i;
+                    qltMultiplier = ((float)i + 1f) * 0.33f;
                 }
-                qltMultiplier = (i + 1f) * 0.33f;
             }
-            this.qualityLvl = maxConfidence * qltMultiplier;
+            this.qualityLvl = maxConfidence * qltMultiplier * 100;
             int pct_aux = (int) this.qualityLvl;
             pct.setText(String.valueOf(pct_aux));
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
