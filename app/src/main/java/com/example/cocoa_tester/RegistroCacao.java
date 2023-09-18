@@ -7,12 +7,15 @@ public class RegistroCacao {
     private String hora;
     private String imagenPath;
 
+    private String porcentaje;
+
     // No tocar o te mueres :)
-    public RegistroCacao(String calidad, String fecha, String hora, String imagenFileName) {
+    public RegistroCacao(String calidad, String fecha, String hora, String imagenFileName, String porcentaje) {
         this.calidad = calidad;
         this.fecha = fecha;
         this.hora = hora;
         this.imagenPath = imagenFileName;
+        this.porcentaje = porcentaje;
     }
 
 
@@ -46,5 +49,13 @@ public class RegistroCacao {
 
     public void setImagenPath(String imagenPath) {
         this.imagenPath = imagenPath;
+    }
+
+    public String getPorcentaje() {
+        return porcentaje;
+    }
+
+    public void setPorcentaje(String porcentaje) {
+        this.porcentaje = porcentaje;
     }
 }

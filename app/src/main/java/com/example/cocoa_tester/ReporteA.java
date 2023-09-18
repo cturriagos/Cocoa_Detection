@@ -30,14 +30,15 @@ public class ReporteA extends AppCompatActivity {
             String[] fechahora_split;
             while ((linea = br.readLine()) != null) {
                 String[] partes = linea.split(" - ");
-                if (partes.length >= 4) {
+                if (partes.length >= 5) {
                     String calidad = partes[0];
                     fechahora_split = partes[2].split(" ");
                     String fecha = fechahora_split[0];
                     String hora = fechahora_split[1];
                     String imagenPath = partes[3];
+                    String porcentaje = partes[4];
 
-                    RegistroCacao registro = new RegistroCacao(calidad, fecha, hora, imagenPath);
+                    RegistroCacao registro = new RegistroCacao(calidad, fecha, hora, imagenPath, porcentaje);
                     registros.add(registro);
                 }
             }

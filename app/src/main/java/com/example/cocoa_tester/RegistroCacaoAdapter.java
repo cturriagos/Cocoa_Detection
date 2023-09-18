@@ -41,6 +41,7 @@ public class RegistroCacaoAdapter extends RecyclerView.Adapter<RegistroCacaoAdap
         holder.txtCalidad.setText("Calidad: " + registro.getCalidad());
         holder.txtFecha.setText("Fecha: " + registro.getFecha());
         holder.txtHora.setText("Hora: " + registro.getHora());
+        holder.txtPorcentaje.setText("Porcentaje: " +registro.getPorcentaje());
 
 
         holder.btnImagen.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +79,7 @@ public class RegistroCacaoAdapter extends RecyclerView.Adapter<RegistroCacaoAdap
         TextView txtCalidad;
         TextView txtFecha;
         TextView txtHora;
+        TextView txtPorcentaje;
         Button btnImagen;
 
         public RegistroViewHolder(@NonNull View itemView) {
@@ -85,6 +87,7 @@ public class RegistroCacaoAdapter extends RecyclerView.Adapter<RegistroCacaoAdap
             txtCalidad = itemView.findViewById(R.id.txtCalidad);
             txtFecha = itemView.findViewById(R.id.txtFecha);
             txtHora = itemView.findViewById(R.id.txtHora);
+            txtPorcentaje = itemView.findViewById(R.id.txtPct);
             btnImagen = itemView.findViewById(R.id.btnImagen);
         }
     }

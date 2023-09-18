@@ -212,6 +212,7 @@ public class H_Alta extends AppCompatActivity {
 
             float[] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
+
             float qltMultiplier = 1.0f;
             float maxConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
@@ -221,17 +222,24 @@ public class H_Alta extends AppCompatActivity {
                     qltMultiplier = ((float)i + 1f) * 0.33f;
                 }
             }
+
+            if (maxConfidence >= 1){
+                maxConfidence = 0.99f;
+            }
             this.qualityLvl = maxConfidence * qltMultiplier * 100;
             int pct_aux = (int) this.qualityLvl;
-            pct.setText(String.valueOf(pct_aux));
+            pct.setText("Calidad estimada del " + String.valueOf(pct_aux) + "% ");
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
-            result.setText(classes[maxPos]);
+            //result.setText(classes[maxPos]);
             if (classes[maxPos] == "Calidad alta"){
+                result.setText("Alta");
                 result.setTextColor(Color.GREEN);
             } else if (classes[maxPos] == "Calidad media") {
+                result.setText("Media");
                 result.setTextColor(Color.YELLOW);
             } else {
+                result.setText("Baja");
                 result.setTextColor(Color.RED);
             }
 
