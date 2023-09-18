@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.Manifest;
-import android.provider.MediaStore;
 
 import com.example.cocoa_tester.ml.HWmodel;
 
@@ -45,8 +44,7 @@ public class H_Alta extends AppCompatActivity {
     ImageView imageView;
     TextView result;
     int imageSize = 300;
-
-    float confidence = 0;
+    float qualityLvl = 0;
 
     private static final int REQUEST_CAMERA_PERMISSION = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -208,14 +206,16 @@ public class H_Alta extends AppCompatActivity {
 
             float[] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
+            float qltMultiplier = 1;
             float maxConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
                 if (confidences[i] > maxConfidence) {
                     maxConfidence = confidences[i];
                     maxPos = i;
                 }
+                qltMultiplier = (i + 1f) * 0.33f;
             }
-            this.confidence = maxConfidence;
+            this.qualityLvl = maxConfidence * qltMultiplier;
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);

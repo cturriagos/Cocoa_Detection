@@ -46,7 +46,7 @@ public class H_Baja extends AppCompatActivity {
     ImageView imageView;
     TextView result;
     int imageSize = 300;
-    float confidence = 0;
+    float qualityLvl = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,14 +174,17 @@ public class H_Baja extends AppCompatActivity {
 
             float[] confidences = outputFeature0.getFloatArray();
             int maxPos = 0;
+
+            float qltMultiplier = 1;
             float maxConfidence = 0;
             for (int i = 0; i < confidences.length; i++) {
                 if (confidences[i] > maxConfidence) {
                     maxConfidence = confidences[i];
                     maxPos = i;
                 }
+                qltMultiplier = (i + 1f) * 0.33f;
             }
-            this.confidence = maxConfidence;
+            this.qualityLvl = maxConfidence * qltMultiplier;
             String[] classes = {"Calidad alta", "Calidad media", "Calidad baja"};
             System.out.printf(classes[maxPos]);
             result.setText(classes[maxPos]);
